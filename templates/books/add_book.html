@@ -6,7 +6,7 @@
 <h2 class="mb-4">Добавить новую книгу</h2>
 
 <form method="post" novalidate>
-    {{ form.hidden_tag() }}  {# CSRF-токен #}
+    {{ form.hidden_tag() }}
 
     <div class="mb-3">
         {{ form.title.label(class="form-label") }}
@@ -59,7 +59,7 @@
 
     <div class="d-grid gap-2">
         {{ form.submit(class="btn btn-success") }}
-        <a href="{{ url_for('books_list') }}" class="btn btn-outline-secondary">Отмена</a>
+        <a href="{{ url_for('books.books_list') }}" class="btn btn-outline-secondary">Отмена</a>
     </div>
 </form>
 {% endblock %}

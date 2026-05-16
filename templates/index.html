@@ -8,6 +8,6 @@
     <img src="{{ url_for('static', filename='images/placeholder.png') }}"
          alt="Заглушка" class="img-fluid mb-4" style="max-width: 300px;">
     <p class="lead">Здесь вы можете найти классические произведения русской литературы.</p>
-    <a href="{{ url_for('books_list') }}" class="btn btn-primary btn-lg">Перейти к каталогу</a>
+    <a href="{{ url_for('books.books_list') }}" class="btn btn-primary btn-lg">Перейти к каталогу</a>
 </div>
 {% endblock %}
