@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Каталог книг{% endblock %}
+
+{% block content %}
+    <table border="1" cellpadding="6" cellspacing="0">
+        <tr>
+            <th>Название</th>
+            <th>Автор</th>
+        </tr>
+        <!-- Цикл Jinja2 вместо генерации строки в Python -->
+        {% for book in books %}
+        <tr>
+            <td>
+                <!-- url_for для динамической ссылки -->
+                <a href="{{ url_for('book_detail', book_id=book.id) }}">
+                    {{ book.title }}
+                </a>
+            </td>
+            <td>{{ book.author }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

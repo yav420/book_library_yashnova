@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ book.title }}</h2>
+
+    {% if book.cover %}
+    <img src="{{ url_for('static', filename='images/' + book.cover) }}"
+         alt="Обложка" width="150" style="margin: 1rem 0;">
+    {% endif %}
+
+    <p><strong>Автор:</strong> {{ book.author }}</p>
+    <p><strong>Жанр:</strong> {{ book.genre }}</p>
+
+    <!-- Фильтр default, если год не указан -->
+    <p><strong>Год:</strong> {{ book.year | default("Год не указан") }}</p>
+
+    <!-- Условие для описания -->
+    {% if book.description %}
+    <p><strong>Описание:</strong> {{ book.description }}</p>
+    {% else %}
+    <p><strong>Описание:</strong> Описание отсутствует</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('books_list') }}">← Назад к каталогу</a></p>
+{% endblock %}
