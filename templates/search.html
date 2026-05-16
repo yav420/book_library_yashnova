@@ -3,29 +3,38 @@
 {% block title %}Поиск{% endblock %}
 
 {% block content %}
-    {% if not q %}
-        <form method="get" action="{{ url_for('search') }}">
-            <input type="text" name="q" placeholder="Название или автор" required>
-            <button type="submit">Искать</button>
-        </form>
-    {% else %}
-        <h3>Результаты поиска по запросу: "{{ q }}"</h3>
+<h2 class="mb-4">Поиск книг</h2>
 
-        {% if results %}
-        <ul>
+{% if not q %}
+    <form method="get" action="{{ url_for('search') }}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control"
+                   placeholder="Название или автор" required>
+            <button class="btn btn-primary" type="submit">Искать</button>
+        </div>
+    </form>
+{% else %}
+    <p class="mb-3"><strong>Результаты поиска по запросу:</strong> "{{ q }}"</p>
+
+    {% if results %}
+        <div class="list-group">
             {% for book in results %}
-            <li>
-                <a href="{{ url_for('book_detail', book_id=book.id) }}">
-                    {{ book.title }}
-                </a>
-                {% if book.year and book.year > 2000 %}
-                <span style="color: green; font-size: 0.9em;">[новинка]</span>
-                {% endif %}
-            </li>
+            <a href="{{ url_for('book_detail', book_id=book.id) }}"
+               class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ book.title }}</h5>
+                    {% if book.year and book.year > 2000 %}
+                    <span class="badge bg-success">новинка</span>
+                    {% endif %}
+                </div>
+                <p class="mb-1 text-muted">{{ book.author }}</p>
+            </a>
             {% endfor %}
-        </ul>
-        {% else %}
-        <p>Ничего не найдено</p>
-        {% endif %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">Ничего не найдено</div>
     {% endif %}
+
+    <a href="{{ url_for('search') }}" class="btn btn-outline-secondary mt-3">← Новый поиск</a>
+{% endif %}
 {% endblock %}

@@ -3,20 +3,23 @@
 {% block title %}Каталог книг{% endblock %}
 
 {% block content %}
-    <table border="1" cellpadding="6" cellspacing="0">
-        <tr>
-            <th>Название</th>
-            <th>Автор</th>
-        </tr>
-        {% for book in books %}
-        <tr>
-            <td>
-                <a href="{{ url_for('book_detail', book_id=book.id) }}">
-                    {{ book.title }}
-                </a>
-            </td>
-            <td>{{ book.author }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+<h2 class="mb-4">Каталог книг</h2>
+<div class="row">
+    {% for book in books %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            {% if book.cover %}
+            <img src="{{ url_for('static', filename='images/' + book.cover) }}"
+                 class="card-img-top" alt="Обложка" style="height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text text-muted">{{ book.author }}</p>
+                <p class="card-text"><small class="text-body-secondary">{{ book.year }}</small></p>
+                <a href="{{ url_for('book_detail', book_id=book.id) }}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

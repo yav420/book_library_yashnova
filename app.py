@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, abort
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'my-secret-key'
 books = [
     {"id": 1, "title": "Война и мир", "author": "Лев Толстой", "genre": "Роман", "year": 1869,
      "description": "Эпопея о русском обществе.", "cover": "placeholder.png"},
