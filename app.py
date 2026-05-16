@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, render_template, abort
+from flask import Flask, request, render_template, abort, flash, redirect, url_for
+from forms import BookForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'my-secret-key'
@@ -53,3 +54,28 @@ def search():
         if q.lower() in b["title"].lower() or q.lower() in b["author"].lower()
     ]
     return render_template("search.html", q=q, results=results)
+
+@app.route("/add-book", methods=["GET", "POST"])
+def add_book():
+    form = BookForm()
+
+    if form.validate_on_submit():
+        # Генерируем новый ID
+        new_id = max(b["id"] for b in books) + 1 if books else 1
+
+        new_book = {
+            "id": new_id,
+            "title": form.title.data,
+            "author": form.author.data,
+            "genre": form.genre.data,
+            "year": form.year.data,
+            "description": form.description.data,
+            "cover": form.cover_filename.data or "placeholder.png"  # Placeholder по умолчанию
+        }
+
+        books.append(new_book)
+
+        flash("Книга успешно добавлена!", "success")
+        return redirect(url_for("books_list"))
+
+    return render_template("add_book.html", form=form)

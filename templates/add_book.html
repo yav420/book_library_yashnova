@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить книгу{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Добавить новую книгу</h2>
+
+<form method="post" novalidate>
+    {{ form.hidden_tag() }}  {# CSRF-токен #}
+
+    <div class="mb-3">
+        {{ form.title.label(class="form-label") }}
+        {{ form.title(class="form-control is-invalid" if form.title.errors else "form-control") }}
+        {% for error in form.title.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.author.label(class="form-label") }}
+        {{ form.author(class="form-control is-invalid" if form.author.errors else "form-control") }}
+        {% for error in form.author.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.genre.label(class="form-label") }}
+        {{ form.genre(class="form-control is-invalid" if form.genre.errors else "form-control") }}
+        {% for error in form.genre.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.year.label(class="form-label") }}
+        {{ form.year(class="form-control is-invalid" if form.year.errors else "form-control") }}
+        {% for error in form.year.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.description.label(class="form-label") }}
+        {{ form.description(class="form-control is-invalid" if form.description.errors else "form-control", rows=4) }}
+        {% for error in form.description.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.cover_filename.label(class="form-label") }}
+        {{ form.cover_filename(class="form-control is-invalid" if form.cover_filename.errors else "form-control", placeholder="placeholder.png") }}
+        <small class="form-text text-muted">Оставьте пустым для использования заглушки</small>
+        {% for error in form.cover_filename.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="d-grid gap-2">
+        {{ form.submit(class="btn btn-success") }}
+        <a href="{{ url_for('books_list') }}" class="btn btn-outline-secondary">Отмена</a>
+    </div>
+</form>
+{% endblock %}
